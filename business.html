@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Analytics Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2 class="logo">BizAnalytics</h2>
+
+        <nav>
+            <a href="#overview" class="active">📊 Dashboard</a>
+            <a href="#revenue">💰 Revenue</a>
+            <a href="#performance">📈 Performance</a>
+            <a href="#transactions">🧾 Transactions</a>
+            <a href="#activities">🔔 Activities</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p>Business Analytics</p>
+            <small>Dashboard v1.0</small>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="overview">
+
+        <header class="topbar">
+            <div>
+                <h1>Business Dashboard</h1>
+                <p>Welcome back! Here's your business overview.</p>
+            </div>
+
+            <div class="profile">
+                <span>Admin User</span>
+                <div class="avatar">AU</div>
+            </div>
+        </header>
+
+        <!-- Date Filter -->
+        <section class="filter-bar">
+            <label for="period">Report period:</label>
+            <select id="period">
+                <option value="month">This Month</option>
+                <option value="week">This Week</option>
+                <option value="year">This Year</option>
+            </select>
+            <button id="refreshBtn">Refresh Data</button>
+        </section>
+
+        <!-- Summary Cards -->
+        <section class="stats-grid">
+
+            <article class="stat-card">
+                <div class="stat-top">
+                    <span>Total Revenue</span>
+                    <span class="stat-icon purple">₹</span>
+                </div>
+                <h2 id="revenueValue">₹4,85,000</h2>
+                <p class="positive">▲ 12.5% <span>vs last period</span></p>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-top">
+                    <span>Total Users</span>
+                    <span class="stat-icon blue">👥</span>
+                </div>
+                <h2 id="usersValue">2,450</h2>
+                <p class="positive">▲ 8.2% <span>vs last period</span></p>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-top">
+                    <span>Total Sales</span>
+                    <span class="stat-icon orange">🛒</span>
+                </div>
+                <h2 id="salesValue">1,280</h2>
+                <p class="positive">▲ 10.4% <span>vs last period</span></p>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-top">
+                    <span>Conversion Rate</span>
+                    <span class="stat-icon green">%</span>
+                </div>
+                <h2 id="conversionValue">4.8%</h2>
+                <p class="positive">▲ 2.1% <span>vs last period</span></p>
+            </article>
+
+        </section>
+
+        <!-- Charts -->
+        <section class="charts-grid" id="revenue">
+
+            <article class="panel chart-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Revenue Overview</h3>
+                        <p>Monthly revenue performance</p>
+                    </div>
+                    <span class="tag">Revenue</span>
+                </div>
+                <canvas id="revenueChart" aria-label="Revenue trend chart"></canvas>
+            </article>
+
+            <article class="panel chart-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Sales Trends</h3>
+                        <p>Monthly sales performance</p>
+                    </div>
+                    <span class="tag">Sales</span>
+                </div>
+                <canvas id="salesChart" aria-label="Sales trend chart"></canvas>
+            </article>
+
+        </section>
+
+        <!-- Performance and Activities -->
+        <section class="bottom-grid" id="performance">
+
+            <article class="panel">
+                <h3>Performance Metrics</h3>
+                <p class="subheading">Current business targets</p>
+
+                <div class="metric">
+                    <div class="metric-info">
+                        <span>Monthly Revenue Target</span>
+                        <strong>78%</strong>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill purple-fill" style="width:78%"></div>
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-info">
+                        <span>Customer Growth</span>
+                        <strong>65%</strong>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill blue-fill" style="width:65%"></div>
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-info">
+                        <span>Sales Target</span>
+                        <strong>85%</strong>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill green-fill" style="width:85%"></div>
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-info">
+                        <span>Customer Satisfaction</span>
+                        <strong>92%</strong>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill orange-fill" style="width:92%"></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="panel" id="activities">
+                <h3>Recent Activities</h3>
+                <p class="subheading">Latest business updates</p>
+
+                <div class="activity">
+                    <div class="activity-icon green">✓</div>
+                    <div>
+                        <strong>New order received</strong>
+                        <p>Order #ORD1025 was placed.</p>
+                        <small>5 minutes ago</small>
+                    </div>
+                </div>
+
+                <div class="activity">
+                    <div class="activity-icon blue">👤</div>
+                    <div>
+                        <strong>New user registered</strong>
+                        <p>A new customer joined.</p>
+                        <small>20 minutes ago</small>
+                    </div>
+                </div>
+
+                <div class="activity">
+                    <div class="activity-icon orange">₹</div>
+                    <div>
+                        <strong>Payment completed</strong>
+                        <p>Payment of ₹12,500 received.</p>
+                        <small>1 hour ago</small>
+                    </div>
+                </div>
+
+                <div class="activity">
+                    <div class="activity-icon purple">📦</div>
+                    <div>
+                        <strong>Product updated</strong>
+                        <p>Product inventory was updated.</p>
+                        <small>2 hours ago</small>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Transactions Table -->
+        <section class="panel transactions" id="transactions">
+            <div class="panel-heading">
+                <div>
+                    <h3>Recent Transactions</h3>
+                    <p>Latest orders and payment details</p>
+                </div>
+                <input type="search" id="searchInput"
+                       placeholder="Search transactions..."
+                       aria-label="Search transactions">
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Product</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="transactionBody">
+                        <tr>
+                            <td>#ORD1025</td>
+                            <td>Rahul Kumar</td>
+                            <td>Laptop</td>
+                            <td>29 Oct 2026</td>
+                            <td>₹55,000</td>
+                            <td><span class="status completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD1024</td>
+                            <td>Priya Sharma</td>
+                            <td>Mobile</td>
+                            <td>28 Oct 2026</td>
+                            <td>₹22,000</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD1023</td>
+                            <td>Arjun Reddy</td>
+                            <td>Headphones</td>
+                            <td>28 Oct 2026</td>
+                            <td>₹3,500</td>
+                            <td><span class="status completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD1022</td>
+                            <td>Sneha Patel</td>
+                            <td>Smart Watch</td>
+                            <td>27 Oct 2026</td>
+                            <td>₹8,000</td>
+                            <td><span class="status cancelled">Cancelled</span></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD1021</td>
+                            <td>Vijay Rao</td>
+                            <td>Tablet</td>
+                            <td>26 Oct 2026</td>
+                            <td>₹18,500</td>
+                            <td><span class="status completed">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 BizAnalytics Dashboard | Designed using HTML, CSS and JavaScript</p>
+        </footer>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
