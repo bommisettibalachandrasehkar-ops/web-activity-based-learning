@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            color: #252b40;
+        }
+
+        /* Main Layout */
+        .container {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #202b46;
+            color: white;
+            padding: 25px 18px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 35px;
+            color: #ffffff;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #d4d9e8;
+            text-decoration: none;
+            padding: 13px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #45577f;
+            color: white;
+        }
+
+        /* Main Content */
+        .main {
+            padding: 25px;
+            min-width: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .header p {
+            color: #7c8499;
+        }
+
+        .add-btn {
+            background: #6554d9;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: #4939b5;
+        }
+
+        /* Project Summary Cards */
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000008;
+        }
+
+        .summary-card p {
+            color: #7c8499;
+            font-size: 14px;
+        }
+
+        .summary-card h2 {
+            font-size: 28px;
+            margin: 12px 0;
+        }
+
+        .summary-card small {
+            color: #16a36a;
+        }
+
+        /* Section Heading */
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .section-heading h2 {
+            font-size: 21px;
+        }
+
+        /* Project Cards */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .project-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border-top: 4px solid #6554d9;
+        }
+
+        .project-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            color: #7c8499;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .project-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 18px 0 10px;
+            font-size: 13px;
+        }
+
+        .progress {
+            background: #e8eaf2;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #6554d9;
+            border-radius: 10px;
+        }
+
+        /* Team Members */
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 18px;
+        }
+
+        .member {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e4e1ff;
+            color: #4939b5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .team span {
+            color: #7c8499;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        /* Kanban Board */
+        .kanban {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            align-items: start;
+        }
+
+        .kanban-column {
+            background: #e9edf5;
+            padding: 15px;
+            border-radius: 12px;
+            min-width: 0;
+        }
+
+        .column-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .count {
+            background: white;
+            padding: 3px 9px;
+            border-radius: 15px;
+        }
+
+        /* Task Cards */
+        .task {
+            background: white;
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 13px;
+            box-shadow: 0 2px 7px #00000006;
+        }
+
+        .task h4 {
+            margin: 12px 0 8px;
+            line-height: 1.5;
+        }
+
+        .task p {
+            color: #7c8499;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .priority {
+            display: inline-block;
+            font-size: 11px;
+            padding: 5px 9px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        .high {
+            background: #ffe5e5;
+            color: #c93232;
+        }
+
+        .medium {
+            background: #fff0d6;
+            color: #a56a08;
+        }
+
+        .low {
+            background: #dcf8e9;
+            color: #16834d;
+        }
+
+        .task-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid #edf0f5;
+        }
+
+        .task-footer small {
+            color: #7c8499;
+        }
+
+        .task-footer .member {
+            width: 29px;
+            height: 29px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1050px) {
+            .summary {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .projects {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .kanban {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                padding: 18px;
+            }
+
+            .sidebar h2 {
+                margin-bottom: 15px;
+            }
+
+            .sidebar nav {
+                display: flex;
+                overflow-x: auto;
+                gap: 5px;
+            }
+
+            .sidebar a {
+                white-space: nowrap;
+            }
+
+            .main {
+                padding: 17px;
+            }
+
+            .header {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .projects,
+            .summary {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <h2>TaskFlow</h2>
+        <nav>
+            <a href="#dashboard" class="active">📊 Dashboard</a>
+            <a href="#projects">📁 Projects</a>
+            <a href="#tasks">✅ My Tasks</a>
+            <a href="#team">👥 Team Members</a>
+            <a href="#tasks">📅 Deadlines</a>
+        </nav>
+    </aside>
+
+    <!-- Dashboard Content -->
+    <main class="main" id="dashboard">
+
+        <header class="header">
+            <div>
+                <h1>Project Dashboard</h1>
+                <p>Welcome back! Here is your team's progress.</p>
+            </div>
+            <button class="add-btn" onclick="addTask()">
+                + Add Task
+            </button>
+        </header>
+
+        <!-- Summary -->
+        <section class="summary">
+            <div class="summary-card">
+                <p>Total Projects</p>
+                <h2>12</h2>
+                <small>↑ 3 new projects</small>
+            </div>
+
+            <div class="summary-card">
+                <p>Total Tasks</p>
+                <h2 id="totalTasks">36</h2>
+                <small>Tasks assigned</small>
+            </div>
+
+            <div class="summary-card">
+                <p>Completed Tasks</p>
+                <h2>24</h2>
+                <small>↑ 67% completion</small>
+            </div>
+
+            <div class="summary-card">
+                <p>Pending Tasks</p>
+                <h2 id="pendingTasks">12</h2>
+                <small style="color:#d58a1d">Tasks remaining</small>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects">
+            <div class="section-heading">
+                <h2>Active Projects</h2>
+                <span>View all →</span>
+            </div>
+
+            <div class="projects">
+
+                <article class="project-card">
+                    <h3>Website Redesign</h3>
+                    <p>Creating a modern and responsive company website.</p>
+                    <div class="project-info">
+                        <span>Progress</span>
+                        <strong>75%</strong>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" style="width:75%"></div>
+                    </div>
+                    <div class="team" id="team">
+                        <div class="member">AK</div>
+                        <div class="member">RS</div>
+                        <div class="member">PM</div>
+                        <span>3 members</span>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <h3>Mobile Application</h3>
+                    <p>Developing an application for Android users.</p>
+                    <div class="project-info">
+                        <span>Progress</span>
+                        <strong>55%</strong>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar"
+                             style="width:55%;background:#3498db"></div>
+                    </div>
+                    <div class="team">
+                        <div class="member">VK</div>
+                        <div class="member">SR</div>
+                        <span>2 members</span>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <h3>Marketing Campaign</h3>
+                    <p>Improving brand awareness and customer reach.</p>
+                    <div class="project-info">
+                        <span>Progress</span>
+                        <strong>85%</strong>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar"
+                             style="width:85%;background:#18a66a"></div>
+                    </div>
+                    <div class="team">
+                        <div class="member">RK</div>
+                        <div class="member">AP</div>
+                        <div class="member">SK</div>
+                        <span>3 members</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Kanban Task Board -->
+        <section id="tasks">
+            <div class="section-heading">
+                <h2>Task Board</h2>
+                <span>Kanban View</span>
+            </div>
+
+            <div class="kanban">
+
+                <!-- To Do -->
+                <div class="kanban-column">
+                    <div class="column-title">
+                        <strong>📌 To Do</strong>
+                        <span class="count" id="todoCount">2</span>
+                    </div>
+
+                    <article class="task">
+                        <span class="priority high">High Priority</span>
+                        <h4>Design Login Page</h4>
+                        <p>Create a user-friendly login interface.</p>
+                        <div class="task-footer">
+                            <small>📅 02 Nov 2026</small>
+                            <div class="member">AK</div>
+                        </div>
+                    </article>
+
+                    <article class="task">
+                        <span class="priority medium">Medium</span>
+                        <h4>Prepare Project Report</h4>
+                        <p>Complete the project documentation.</p>
+                        <div class="task-footer">
+                            <small>📅 05 Nov 2026</small>
+                            <div class="member">RS</div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- In Progress -->
+                <div class="kanban-column">
+                    <div class="column-title">
+                        <strong>⚙️ In Progress</strong>
+                        <span class="count" id="progressCount">2</span>
+                    </div>
+
+                    <article class="task">
+                        <span class="priority high">High Priority</span>
+                        <h4>Develop Dashboard</h4>
+                        <p>Build project cards and progress indicators.</p>
+                        <div class="progress">
+                            <div class="progress-bar" style="width:60%"></div>
+                        </div>
+                        <div class="task-footer">
+                            <small>📅 03 Nov 2026</small>
+                            <div class="member">PM</div>
+                        </div>
+                    </article>
+
+                    <article class="task">
+                        <span class="priority low">Low Priority</span>
+                        <h4>Update Documentation</h4>
+                        <p>Review and update project notes.</p>
+                        <div class="task-footer">
+                            <small>📅 06 Nov 2026</small>
+                            <div class="member">VK</div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Completed -->
+                <div class="kanban-column">
+                    <div class="column-title">
+                        <strong>✅ Completed</strong>
+                        <span class="count" id="completedCount">2</span>
+                    </div>
+
+                    <article class="task">
+                        <span class="priority low">Completed</span>
+                        <h4>Create Wireframes</h4>
+                        <p>Initial design layouts are completed.</p>
+                        <div class="task-footer">
+                            <small>✓ Finished</small>
+                            <div class="member">SR</div>
+                        </div>
+                    </article>
+
+                    <article class="task">
+                        <span class="priority low">Completed</span>
+                        <h4>Project Planning</h4>
+                        <p>Project requirements have been finalized.</p>
+                        <div class="task-footer">
+                            <small>✓ Finished</small>
+                            <div class="member">RK</div>
+                        </div>
+                    </article>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    function addTask() {
+        const taskName = prompt("Enter the new task name:");
+
+        if (!taskName || taskName.trim() === "") {
+            return;
+        }
+
+        const task = document.createElement("article");
+        task.className = "task";
+
+        const priority = document.createElement("span");
+        priority.className = "priority medium";
+        priority.textContent = "Medium";
+
+        const heading = document.createElement("h4");
+        heading.textContent = taskName.trim();
+
+        const description = document.createElement("p");
+        description.textContent = "New task. Update the deadline as needed.";
+
+        const footer = document.createElement("div");
+        footer.className = "task-footer";
+
+        const deadline = document.createElement("small");
+        deadline.textContent = "📅 Deadline not set";
+
+        const member = document.createElement("div");
+        member.className = "member";
+        member.textContent = "YOU";
+
+        footer.append(deadline, member);
+        task.append(priority, heading, description, footer);
+
+        document.querySelector("#tasks .kanban-column").appendChild(task);
+
+        const count = document.getElementById("todoCount");
+        count.textContent = Number(count.textContent) + 1;
+
+        const total = document.getElementById("totalTasks");
+        total.textContent = Number(total.textContent) + 1;
+
+        const pending = document.getElementById("pendingTasks");
+        pending.textContent = Number(pending.textContent) + 1;
+    }
+</script>
+
+</body>
+</html>
